@@ -12,19 +12,19 @@ sitesAvailable='/etc/nginx/sites-available/'
 userDir='/var/www/'
 
 if [ "$(whoami)" != 'root' ]; then
-	echo $"You have no permission to run $0 as non-root user. Use sudo"
+	echo $"Você não tem permissão para executar $0 como non-root user. Use sudo"
 		exit 1;
 fi
 
 if [ "$action" != 'create' ] && [ "$action" != 'delete' ]
 	then
-		echo $"You need to prompt for action (create or delete) -- Lower-case only"
+		echo $"Você precisa definir uma ação (create or delete) -- Lower-case only"
 		exit 1;
 fi
 
 while [ "$domain" == "" ]
 do
-	echo -e $"Please provide domain. e.g.dev,staging"
+	echo -e $"Defina um domínio, ex: projeto.dev"
 	read domain
 done
 
@@ -36,7 +36,7 @@ if [ "$action" == 'create' ]
 	then
 		### check if domain already exists
 		if [ -e $sitesAvailable$domain ]; then
-			echo -e $"This domain already exists.\nPlease Try Another one"
+			echo -e $"O domínio ja existe.\nTente outro"
 			exit;
 		fi
 
@@ -49,10 +49,10 @@ if [ "$action" == 'create' ]
 			### write test file in the new domain dir
 			if ! echo "<?php echo phpinfo(); ?>" > $userDir$rootdir/phpinfo.php
 				then
-					echo $"ERROR: Not able to write in file $userDir/$rootdir/phpinfo.php. Please check permissions."
+				echo $"ERROR: Não é possível de escrever no arquivo $userDir/$rootdir/phpinfo.php. Veja as permissões"
 					exit;
 			else
-					echo $"Added content to $userDir$rootdir/phpinfo.php."
+				echo $"Adicionado conteúdo $userDir$rootdir/phpinfo.php"
 			fi
 		fi
 
@@ -101,19 +101,19 @@ if [ "$action" == 'create' ]
 
 		}" > $sitesAvailable$domain
 		then
-			echo -e $"There is an ERROR create $domain file"
+			echo -e $"Ocorreu um erro ao criar $domain arquivo"
 			exit;
 		else
-			echo -e $"\nNew Virtual Host Created\n"
+			echo -e $"Host adicionado no arquivo /etc/hosts  \n"
 		fi
 
 		### Add domain in /etc/hosts
 		if ! echo "127.0.0.1	$domain" >> /etc/hosts
 			then
-				echo $"ERROR: Not able write in /etc/hosts"
+			echo $"ERROR: Sem permissões para acessar /etc/hosts"
 				exit;
 		else
-				echo -e $"Host added to /etc/hosts file \n"
+			echo -e $"Host adicionado no arquivo /etc/hosts  \n"
 		fi
 
 		if [ "$owner" == "" ]; then
@@ -129,12 +129,12 @@ if [ "$action" == 'create' ]
 		service nginx restart
 
 		### show the finished message
-		echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $userDir$rootdir"
+		echo -e $"Pronto! \nSeu VirtualHost foi criado \nSeu novo host é : http://$domain \nE está localizado em  $userDir$rootdir"
 		exit;
 	else
 		### check whether domain already exists
 		if ! [ -e $sitesAvailable$domain ]; then
-			echo -e $"This domain dont exists.\nPlease Try Another one"
+			echo -e $"Este domínio não exite."
 			exit;
 		else
 			### Delete domain in /etc/hosts
@@ -153,21 +153,21 @@ if [ "$action" == 'create' ]
 
 		### check if directory exists or not
 		if [ -d $userDir$rootdir ]; then
-			echo -e $"Delete host root directory ? (s/n)"
+			echo -e $"Delete diretório root ? (y/n)"
 			read deldir
 
 			if [ "$deldir" == 's' -o "$deldir" == 'S' ]; then
 				### Delete the directory
 				rm -rf $userDir$rootdir
-				echo -e $"Directory deleted"
+				echo -e $"Diretório deletado"
 			else
-				echo -e $"Host directory conserved"
+				echo -e $"Diretório mantido"
 			fi
 		else
-			echo -e $"Host directory not found. Ignored"
+			echo -e $"Diretório não encontrado."
 		fi
 
 		### show the finished message
-		echo -e $"Complete!\nYou just removed Virtual Host $domain"
+		echo -e $"Pronto!\nVocê removeu seu VirtualHost $domain"
 		exit 0;
 fi

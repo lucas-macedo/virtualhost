@@ -1,21 +1,19 @@
-Virtualhost Manage Script
+Gerador de VirtualHost no Ubuntu/Debian
 ===========
 
-Bash Script to allow create or delete apache/nginx virtual hosts on Ubuntu on a quick way.
+Bash Script para permitir criar ou excluir VirtualHost do apache/nginx  no Ubuntu/Debian de maneira rápida.
 
-## Installation ##
+## Instalação ##
 
-1. Download the script
-2. Apply permission to execute:
+1. Download do script
+2. Setar permissões:
 
         $ chmod +x /path/to/virtualhost.sh
 
-3. Optional: if you want to use the script globally, then you need to copy the file to your /usr/local/bin directory, is better
-if you copy it without the .sh extension:
-
+3. Opicional: Se você quer deixar o script como globa, você tem que copiar o arquivo para /usr/local/bin o diretório.
         $ sudo cp /path/to/virtualhost.sh /usr/local/bin/virtualhost
 
-### For Global Shortcut ###
+### Instalação Global ###
 
         $ cd /usr/local/bin
         $ wget -O virtualhost https://raw.githubusercontent.com/RoverWire/virtualhost/master/virtualhost.sh
@@ -23,41 +21,41 @@ if you copy it without the .sh extension:
         $ wget -O virtualhost-nginx https://raw.githubusercontent.com/RoverWire/virtualhost/master/virtualhost-nginx.sh
         $ chmod +x virtualhost-nginx
 
-## Usage ##
+## Usando ##
 
-Basic command line syntax:
+Comandos básicos:
 
-    $ sudo sh /path/to/virtualhost.sh [create | delete] [domain] [optional host_dir]
+    $ sudo sh /path/to/virtualhost.sh [create | delete] [dominio] [opicional caminho_pasta]
 
-With script installed on /usr/local/bin
+    Para instalação global:
 
-    $ sudo virtualhost [create | delete] [domain] [optional host_dir]
+    $ sudo virtualhost [create | delete] [dominio] [opicional caminho_pasta]
 
 
-### Examples ###
+### Exemlos ###
 
-to create a new virtual host:
+Criar um novo VirtualHost:
 
-    $ sudo virtualhost create mysite.dev
+    $ sudo virtualhost create site.dev
 
-to create a new virtual host with custom directory name:
+Criar um novo VirtualHost e definir a pasta:
 
-    $ sudo virtualhost create anothersite.dev my_dir
+    $ sudo virtualhost create outrosite.dev minha_pasta
 
-to delete a virtual host
+Para deletar um VirtualHost: 
 
     $ sudo virtualhost delete mysite.dev
 
-to delete a virtual host with custom directory name:
+Para deletar um VirtualHost com em uma pasta definida:
 
-    $ sudo virtualhost delete anothersite.dev my_dir
+    $ sudo virtualhost delete outrosite.dev minha_pasta
 
-### Localization
+### Localizações
 
-For Apache:
+Para Apache:
 
 		$ sudo cp /path/to/locale/<language>/virtualhost.mo /usr/share/locale/<language>/LC_MESSAGES/
 
-For NGINX:
+Para NGINX:
 
 		$ sudo cp /path/to/locale/<language>/virtualhost-nginx.mo /usr/share/locale/<language>/LC_MESSAGES/
